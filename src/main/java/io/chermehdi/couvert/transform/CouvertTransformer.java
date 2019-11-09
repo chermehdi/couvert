@@ -27,7 +27,7 @@ public class CouvertTransformer implements ClassFileTransformer {
       classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
       return classWriter.toByteArray();
     }
-    return classfileBuffer;
+    return null;
   }
 
   private boolean shouldTransform(String className, ClassLoader loader, byte[] classfileBuffer) {
