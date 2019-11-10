@@ -9,7 +9,6 @@ import org.objectweb.asm.Opcodes;
  */
 public class CouvertClassVisitor extends ClassVisitor implements Opcodes {
 
-  private int version;
   private String className;
   private String sourceFile;
 
@@ -21,16 +20,13 @@ public class CouvertClassVisitor extends ClassVisitor implements Opcodes {
   public void visit(int version, int access, String name, String signature, String superName,
       String[] interfaces) {
     super.visit(version, access, name, signature, superName, interfaces);
-    System.out.println("Visiting the class " + name);
     this.className = name;
-    this.version = version;
   }
 
   @Override
   public void visitSource(String source, String debug) {
     super.visitSource(source, debug);
     this.sourceFile = className.substring(0, className.lastIndexOf("/") + 1) + source;
-    System.out.println("visit source " + sourceFile);
   }
 
   @Override

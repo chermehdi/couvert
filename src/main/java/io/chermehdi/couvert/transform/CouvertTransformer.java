@@ -1,8 +1,6 @@
 package io.chermehdi.couvert.transform;
 
-import io.chermehdi.couvert.agent.CouvertAgent;
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -17,8 +15,7 @@ public class CouvertTransformer implements ClassFileTransformer {
 
   @Override
   public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-      ProtectionDomain protectionDomain, byte[] classfileBuffer)
-      throws IllegalClassFormatException {
+      ProtectionDomain protectionDomain, byte[] classfileBuffer) {
     if (shouldTransform(className, loader, classfileBuffer)) {
       // transform
       ClassReader classReader = new ClassReader(classfileBuffer);
@@ -27,6 +24,7 @@ public class CouvertTransformer implements ClassFileTransformer {
       classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
       return classWriter.toByteArray();
     }
+    // indication to the JVM to not do the class rewrite.
     return null;
   }
 
